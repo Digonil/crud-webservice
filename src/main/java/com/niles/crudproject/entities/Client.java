@@ -1,5 +1,6 @@
 package com.niles.crudproject.entities;
 
+import com.niles.crudproject.dto.ClientRequest;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -28,6 +29,14 @@ public class Client {
         this.income = income;
         this.birthDate = birthDate;
         this.children = children;
+    }
+
+    public Client(ClientRequest dto) {
+        this.name = dto.name();
+        this.cpf = dto.cpf();
+        this.income = dto.income();
+        this.birthDate = dto.birthDate();
+        this.children = dto.children();
     }
 
     public Long getId() {
