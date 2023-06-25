@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "/client")
+@RequestMapping(value = "/clients")
 public class ClientController {
 
     @Autowired
@@ -32,6 +32,7 @@ public class ClientController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping
     public ResponseEntity<ClientResponse> save(@Valid @RequestBody ClientRequest request) {
         ClientResponse response = service.save(request);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
