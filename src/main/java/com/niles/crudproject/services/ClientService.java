@@ -6,6 +6,7 @@ import com.niles.crudproject.entities.Client;
 import com.niles.crudproject.repository.ClientRepository;
 import com.niles.crudproject.services.exceptions.DatabaseException;
 import com.niles.crudproject.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,11 +40,17 @@ public class ClientService {
         return new ClientResponse(entity);
     }
 
+    @Transactional
     public ClientResponse update(Long id, ClientRequest request) {
-        Client client = repository.getReferenceById(id);
-        copyRequestToEntity(request, client);
-        Client result = repository.save(client);
-        return new ClientResponse(result);
+        try {
+            Client client = repository.getReferenceById(id);
+            copyRequestToEntity(request, client);
+            Client result = repository.save(client);
+            return new ClientResponse(result);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado!");
+        }
+
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

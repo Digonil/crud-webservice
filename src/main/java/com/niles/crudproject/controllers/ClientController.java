@@ -26,7 +26,7 @@ public class ClientController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping(value = "/id")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ClientResponse> findById(@PathVariable Long id) {
         ClientResponse response = service.findById(id);
         return ResponseEntity.ok(response);
@@ -40,13 +40,13 @@ public class ClientController {
         return ResponseEntity.created(uri).body(response);
     }
 
-    @PutMapping(value = "/id")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ClientResponse> update(@PathVariable Long id, @RequestBody ClientRequest request) {
         var updatedResponse = service.update(id, request);
         return ResponseEntity.ok(updatedResponse);
     }
 
-    @DeleteMapping(value = "/id")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
